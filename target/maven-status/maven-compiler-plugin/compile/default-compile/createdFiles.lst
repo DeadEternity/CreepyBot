@@ -1,0 +1,5 @@
+org/deadeternity/telegrambot/Main.class
+org/deadeternity/telegrambot/mrakopedia/MrakopediaParser.class
+org/deadeternity/telegrambot/Utils/HttpRequester.class
+org/deadeternity/telegrambot/CreepyPaste.class
+org/deadeternity/telegrambot/CreepyBot.class
