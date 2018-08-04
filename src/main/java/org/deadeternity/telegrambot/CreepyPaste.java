@@ -8,9 +8,8 @@ import org.telegram.telegraph.api.methods.CreatePage;
 import org.telegram.telegraph.api.objects.*;
 import org.telegram.telegraph.exceptions.TelegraphException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import javax.xml.bind.Element;
+import java.util.*;
 
 public class CreepyPaste {
     private String title;
@@ -108,36 +107,75 @@ public class CreepyPaste {
         TelegraphContextInitializer.init();
         TelegraphContext.registerInstance(ExecutorOptions.class, new ExecutorOptions());
 
+        ArrayList<Node> node = new ArrayList<Node>();
+        Integer length = 0;
+        ArrayList<ArrayList<Node>> formatPaste = new ArrayList<ArrayList<Node>>();
+
+        for(String pastePart : this.text) {
+            if(length >= 10000) {
+                formatPaste.add(node);
+                length = 0;
+                node = new ArrayList<Node>();
+            }
+
+            length += pastePart.length();
+
+            NodeText nodeText = new NodeText(pastePart);
+            ArrayList<Node> textContent = new ArrayList<Node>();
+            textContent.add(nodeText);
+
+            NodeElement p = new NodeElement()
+                    .setTag("p")
+                    .setChildren(textContent);
+
+            node.add(p);
+
+        }
+
+        this.setPages(formatPaste.size());
+
         try {
             Account account = new CreateAccount("CreepyPasteBot")
                     .setAuthorName("CreepyPasteBot")
                     .setAuthorUrl("https://t.me/CreepyPasteBot")
                     .execute();
 
+            Collections.reverse(formatPaste);
 
-            ArrayList<String> reversed = new ArrayList<String>(this.text);
+            Page telegraphPage;
+            String nextLink = "";
 
-                Node contentNode = new NodeText(reversed.get(0));
+            for(ArrayList<Node> page : formatPaste) {
+                if(formatPaste.indexOf(page) == 0) {
+                    NodeElement originalNode = new NodeElement()
+                            .setTag("a");
 
-                List<Node> content = new ArrayList<Node>();
-                content.add(contentNode);
+                    HashMap<String, String> href = new HashMap<String, String>();
+                    href.put("href", this.link);
+                    originalNode.setAttrs(href);
+                    page.add(originalNode);
+                } else {
+                    NodeElement originalNode = new NodeElement()
+                            .setTag("a");
+                    HashMap<String, String> href = new HashMap<String, String>();
+                    href.put("href", nextLink);
+                    originalNode.setAttrs(href);
+                    page.add(originalNode);
 
-                NodeElement nodeElement = new NodeElement();
-                nodeElement.setTag("p");
-                nodeElement.setChildren(content);
+                }
+                StringBuilder title = new StringBuilder(this.title);
+                if(formatPaste.indexOf(page) != formatPaste.size()-1) {
+                    title.append(" Часть " + (formatPaste.size() - formatPaste.indexOf(page)) + "/" + formatPaste.size());
+                }
 
-                List<Node> finalContent = new ArrayList<Node>();
-                finalContent.add(nodeElement);
-
-                Page page = new CreatePage(account.getAccessToken(), this.title, finalContent)
+                telegraphPage = new CreatePage(account.getAccessToken(), title.toString(), page)
                         .setAuthorName("CreepyPasteBot")
                         .setReturnContent(true)
                         .execute();
-                return page.getUrl();
-            /*for(String page : reversed) {
 
+                nextLink = telegraphPage.getUrl();
             }
-            */
+            return nextLink;
         } catch (TelegraphException e) {
             e.printStackTrace();
         }
