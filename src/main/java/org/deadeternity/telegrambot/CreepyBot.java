@@ -17,14 +17,16 @@ public class CreepyBot extends TelegramLongPollingBot{
         SendMessage sender = new SendMessage();
         Message message;
         if(update.hasMessage() && (message = update.getMessage()).hasText()) {
+            System.out.println(message.getText());
 
             if(message.getText().equals("/random")) {
                 CreepyPaste paste = MrakopediaParser.getRandomPasteText();
                 paste.postOnTelegraph();
                 sender = new SendMessage();
                 sender.setChatId(message.getChatId());
-                sender.enableMarkdown(true);
+                sender.enableHtml(true);
                 sender.setText(paste.getMessageView());
+
 
             }
             try {

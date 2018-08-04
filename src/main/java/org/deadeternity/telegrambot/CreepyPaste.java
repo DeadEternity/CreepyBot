@@ -201,12 +201,11 @@ public class CreepyPaste {
 
     public String getMessageView() {
         StringBuilder result = new StringBuilder();
-        result.append("[" + this.getTitle() + "](" + this.getTelegraphLink() + ")\n\n");
-        result.append("*Примерное время на прочтение*: " + this.getEstTime() + " минут(ы)\n");
-        result.append(this.getRating() + "%(_" + this.getVotes() + " оценок_)\n\n");
+        result.append("<a href=\"" + this.getTelegraphLink() + "\">" + this.getTitle() + "</a>\n\n");
+        result.append("<strong>Примерное время на прочтение</strong>: " + this.getEstTime() + " минут(ы)\n");
+        result.append(this.getRating() + "%(<i>" + this.getVotes() + " оценок</i>)\n\n");
         for(String tag : this.tags) {
-            StringBuilder formatedTag = new StringBuilder(tag.replaceAll("[\\s-()]", "_"));
-            while(formatedTag.indexOf("_") != -1) formatedTag.replace(formatedTag.indexOf("_"), formatedTag.indexOf("_") + 1, "\\_");
+            StringBuilder formatedTag = new StringBuilder(tag.replaceAll("[\\s-()]", "\\_"));
             result.append("#" + formatedTag.toString() + " ");
         }
         return result.toString();
