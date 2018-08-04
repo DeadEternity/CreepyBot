@@ -1,7 +1,9 @@
 package org.deadeternity.telegrambot;
 
+import org.deadeternity.telegrambot.mrakopedia.MrakopediaParser;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -12,11 +14,19 @@ public class CreepyBot extends TelegramLongPollingBot{
 
     public void onUpdateReceived(Update update) {
         //TODO: command parser method
-        if(update.hasMessage() && update.getMessage().hasText()) {
-            SendMessage sender = new SendMessage()
-                    .setChatId(update.getMessage().getChatId())
-                    .enableMarkdown(true)
-                    .setText("test");
+        SendMessage sender = new SendMessage();
+        Message message;
+        if(update.hasMessage() && (message = update.getMessage()).hasText()) {
+
+            if(message.getText().equals("/random")) {
+                CreepyPaste paste = MrakopediaParser.getRandomPasteText();
+                paste.postOnTelegraph();
+                sender = new SendMessage();
+                sender.setChatId(message.getChatId());
+                sender.enableMarkdown(true);
+                sender.setText(paste.getMessageView());
+
+            }
             try {
                 execute(sender);
             } catch (TelegramApiException e) {

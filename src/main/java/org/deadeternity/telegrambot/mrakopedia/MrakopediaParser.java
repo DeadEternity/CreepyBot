@@ -39,7 +39,6 @@ public class MrakopediaParser {
 
         for(Element el : document.select("div#mw-content-text").select("p")) {
             paste.addText(el.text());
-            System.out.println(el.text());
         }
 
         for(Element tag : document.select("div#catlinks").select("li")) {

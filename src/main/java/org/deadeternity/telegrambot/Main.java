@@ -8,13 +8,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class Main {
 
     public static void main(String[] args) {
-
-        CreepyPaste p =  MrakopediaParser.getRandomPasteText();
-
-        System.out.println(p.postOnTelegraph());
-
-
-
         ApiContextInitializer.init();
 
         TelegramBotsApi api = new TelegramBotsApi();

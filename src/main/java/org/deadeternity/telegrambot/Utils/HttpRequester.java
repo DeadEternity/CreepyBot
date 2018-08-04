@@ -30,7 +30,6 @@ public class HttpRequester {
 
             result[0] = URLDecoder.decode(connection.getURL().toString(), "UTF-8");
             result[1] = stringBuilder.toString();
-            System.out.println(result[0]);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

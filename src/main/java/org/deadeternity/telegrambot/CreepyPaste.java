@@ -129,8 +129,8 @@ public class CreepyPaste {
                     .setChildren(textContent);
 
             node.add(p);
-
         }
+        formatPaste.add(node);
 
         this.setPages(formatPaste.size());
 
@@ -147,23 +147,39 @@ public class CreepyPaste {
 
             for(ArrayList<Node> page : formatPaste) {
                 if(formatPaste.indexOf(page) == 0) {
+                    NodeText originalHref = new NodeText("Читать на Мракопедии");
+                    ArrayList<Node> hrefContent = new ArrayList<Node>();
+                    hrefContent.add(originalHref);
+
                     NodeElement originalNode = new NodeElement()
                             .setTag("a");
 
                     HashMap<String, String> href = new HashMap<String, String>();
                     href.put("href", this.link);
+
                     originalNode.setAttrs(href);
+
+                    originalNode.setChildren(hrefContent);
+
                     page.add(originalNode);
                 } else {
+                    NodeText nextHref = new NodeText("Продолжение...");
+                    ArrayList<Node> hrefContent = new ArrayList<Node>();
+                    hrefContent.add(nextHref);
+
                     NodeElement originalNode = new NodeElement()
                             .setTag("a");
                     HashMap<String, String> href = new HashMap<String, String>();
                     href.put("href", nextLink);
-                    originalNode.setAttrs(href);
-                    page.add(originalNode);
 
+                    originalNode.setAttrs(href);
+
+                    originalNode.setChildren(hrefContent);
+
+                    page.add(originalNode);
                 }
                 StringBuilder title = new StringBuilder(this.title);
+                title.append(".");
                 if(formatPaste.indexOf(page) != formatPaste.size()-1) {
                     title.append(" Часть " + (formatPaste.size() - formatPaste.indexOf(page)) + "/" + formatPaste.size());
                 }
@@ -175,10 +191,24 @@ public class CreepyPaste {
 
                 nextLink = telegraphPage.getUrl();
             }
-            return nextLink;
+            this.setTelegraphLink(nextLink);
+            return this.getTelegraphLink();
         } catch (TelegraphException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String getMessageView() {
+        StringBuilder result = new StringBuilder();
+        result.append("[" + this.getTitle() + "](" + this.getTelegraphLink() + ")\n\n");
+        result.append("*Примерное время на прочтение*: " + this.getEstTime() + " минут(ы)\n");
+        result.append(this.getRating() + "%(_" + this.getVotes() + " оценок_)\n\n");
+        for(String tag : this.tags) {
+            StringBuilder formatedTag = new StringBuilder(tag.replaceAll("[\\s-()]", "_"));
+            while(formatedTag.indexOf("_") != -1) formatedTag.replace(formatedTag.indexOf("_"), formatedTag.indexOf("_") + 1, "\\_");
+            result.append("#" + formatedTag.toString() + " ");
+        }
+        return result.toString();
     }
 }
