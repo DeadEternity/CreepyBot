@@ -1,5 +1,11 @@
 /home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/mrakopedia/MrakopediaParser.java
+/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/Entities/CreepyPaste.java
+/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/DAOs/UserDAO.java
 /home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/Main.java
-/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/CreepyBot.java
-/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/CreepyPaste.java
+/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/Services/UserService.java
+/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/DAOs/CreepyPasteDAO.java
+/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/Entities/User.java
+/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/telegram/CreepyBot.java
+/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/Services/CreepyPasteService.java
 /home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/Utils/HttpRequester.java
+/home/colephelps/IdeaProjects/telegrambotcreepy/src/main/java/org/deadeternity/telegrambot/Utils/HibernateSessionFactory.java

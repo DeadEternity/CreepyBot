@@ -1,5 +1,11 @@
 org/deadeternity/telegrambot/Main.class
-org/deadeternity/telegrambot/mrakopedia/MrakopediaParser.class
 org/deadeternity/telegrambot/Utils/HttpRequester.class
-org/deadeternity/telegrambot/CreepyPaste.class
-org/deadeternity/telegrambot/CreepyBot.class
+org/deadeternity/telegrambot/Utils/HibernateSessionFactory.class
+org/deadeternity/telegrambot/Services/CreepyPasteService.class
+org/deadeternity/telegrambot/DAOs/CreepyPasteDAO.class
+org/deadeternity/telegrambot/DAOs/UserDAO.class
+org/deadeternity/telegrambot/mrakopedia/MrakopediaParser.class
+org/deadeternity/telegrambot/telegram/CreepyBot.class
+org/deadeternity/telegrambot/Services/UserService.class
+org/deadeternity/telegrambot/Entities/User.class
+org/deadeternity/telegrambot/Entities/CreepyPaste.class
